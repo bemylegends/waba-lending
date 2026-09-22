@@ -61,7 +61,7 @@
     box-shadow:var(--shadow-1);
   }
   .brand{display:flex;align-items:center;gap:9px;text-decoration:none;padding-left:6px}
-  .brand img{height:22px;width:auto;display:block}
+  .brand img{height:36px;width:auto;display:block}
   .brand-text{font-weight:600;font-size:15px;letter-spacing:.01em;color:var(--ink)}
   .brand-text .divider{color:var(--ink-faint);font-weight:300;margin:0 7px}
   .brand-text .tag{color:var(--gold)}
@@ -147,7 +147,7 @@
     display:flex;align-items:center;justify-content:center;
     font-size:30px;font-weight:700;color:#2b2008;
   }
-  .mcard .face img{width:100%;height:100%;object-fit:cover}
+  .mcard .face img{width:100%;height:100%;object-fit:cover;object-position:50% 18%}
   .mcard .mname{font-size:13.5px;font-weight:600;color:var(--ink)}
   .mcard .mrole{font-size:11.5px;color:var(--ink-faint);line-height:1.4}
   .m1{top:0;left:6%;width:190px;transform:rotate(-6deg);animation:float1 7s ease-in-out infinite}
@@ -180,7 +180,7 @@
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     font-size:28px;font-weight:700;color:#2b2008;
   }
-  .pin-chip .photo-fill img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+  .pin-chip .photo-fill img{width:100%;height:100%;object-fit:cover;object-position:50% 15%;display:block;position:absolute;inset:0}
   .pin-chip .cap{
     position:relative;z-index:1;padding:18px 20px 16px;width:100%;
     background:linear-gradient(0deg,rgba(20,15,4,.78) 10%,transparent 90%);
@@ -282,11 +282,11 @@
   }
   .speaker:hover{border-color:var(--gold);transform:translateY(-8px);box-shadow:var(--shadow-2)}
   .speaker .avatar{
-    width:100%;aspect-ratio:1/1;border-radius:var(--r-md);overflow:hidden;position:relative;
+    width:100%;aspect-ratio:4/5;border-radius:var(--r-md);overflow:hidden;position:relative;
     display:flex;align-items:center;justify-content:center;
     font-size:44px;font-weight:700;color:#2b2008;
   }
-  .speaker .avatar img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+  .speaker .avatar img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;position:absolute;inset:0}
   .speaker .name{font-size:17px;font-weight:600;color:var(--ink);margin-top:18px}
   .speaker .role{font-size:13px;color:var(--ink-faint);margin-top:6px;line-height:1.5}
 
@@ -350,7 +350,7 @@
   footer{padding:48px 0}
   .foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
   .foot-brand{display:flex;align-items:center;gap:10px}
-  .foot-brand img{height:16px;width:auto}
+  .foot-brand img{height:26px;width:auto}
   .foot-brand span{font-size:13px;color:var(--ink-faint)}
   footer .foot-links{display:flex;gap:24px}
   footer .foot-links a{font-size:13px;color:var(--ink-faint);text-decoration:none}

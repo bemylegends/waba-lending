@@ -85,21 +85,21 @@ export default function Page() {
           {text:"AI-powered network", bg:"#241A07", cls:"on-dark"},
           {text:"Founders & investors", bg:"linear-gradient(135deg,#E0A83D,#BE8C2B)", cls:""},
           {text:"3 membership tracks", bg:"var(--surface-2)", cls:"bordered"},
-          {text:"Closed Room format", bg:"var(--surface)", cls:"bordered"},
+          {text:"Session, then the network", bg:"var(--surface)", cls:"bordered"},
           {text:"Person first.", bg:"#241A07", cls:"on-dark"}
         ];
         // spread across the full width — left, center (free to sit over the card), right — mixing photos and facts.
         // on narrow screens only the un-hidden entries survive, so those are kept balanced left/right on their own
         // (see keep-mobile logic below) — the 4 photo chips carry that job, facts are decorative extras on wide screens.
         var pinLayout = [
-          {top:"0%",  left:"1%",  w:220, h:230, from:30,  to:-25, type:"photo", p:0},
-          {top:"3%",  left:"39%", w:220, h:160, from:-32, to:34,  type:"fact",  f:0, mobileHide:true},
-          {top:"6%",  left:"76%", w:210, h:190, from:-26, to:30,  type:"photo", p:1},
-          {top:"46%", left:"3%",  w:210, h:160, from:32,  to:-30, type:"fact",  f:3, mobileHide:true},
-          {top:"48%", left:"78%", w:210, h:160, from:-28, to:32,  type:"fact",  f:1, mobileHide:true},
-          {top:"80%", left:"2%",  w:220, h:180, from:26,  to:-30, type:"photo", p:2},
-          {top:"82%", left:"38%", w:220, h:150, from:28,  to:-34, type:"fact",  f:2, mobileHide:true},
-          {top:"76%", left:"73%", w:210, h:210, from:-30, to:28,  type:"photo", p:3}
+          {top:"0%",  left:"7%",  w:220, h:230, from:30,  to:-25, type:"photo", p:0},
+          {top:"3%",  left:"40%", w:220, h:160, from:-32, to:34,  type:"fact",  f:0, mobileHide:true},
+          {top:"6%",  left:"80%", w:210, h:190, from:-26, to:30,  type:"photo", p:1},
+          {top:"46%", left:"11%", w:210, h:160, from:32,  to:-30, type:"fact",  f:3, mobileHide:true},
+          {top:"48%", left:"68%", w:210, h:160, from:-28, to:32,  type:"fact",  f:1, mobileHide:true},
+          {top:"80%", left:"5%",  w:220, h:180, from:26,  to:-30, type:"photo", p:2},
+          {top:"82%", left:"43%", w:220, h:150, from:28,  to:-34, type:"fact",  f:2, mobileHide:true},
+          {top:"76%", left:"77%", w:210, h:210, from:-30, to:28,  type:"photo", p:3}
         ];
         var pinPhotos = document.getElementById('pinPhotos');
         var pinChips = pinLayout.map(function(spot){
@@ -216,13 +216,13 @@ export default function Page() {
             <div className="hero-lead reveal">
               <p className="eyebrow">Legends Event Format &middot; InvestHack</p>
               <h1>The <span className="accent">real numbers</span> behind a raise, told by the person who did it.</h1>
-              <p className="sub">InvestHack is not a pitch night. It's operating knowledge behind a specific result &mdash; the decisions, the systems, the mistakes &mdash; pulled out of one founder or investor in public, then finished in private with the room.</p>
+              <p className="sub">InvestHack is not a pitch night. It's operating knowledge behind a specific result &mdash; the decisions, the systems, the mistakes &mdash; pulled out of one founder or investor in public, then finished in private with the network.</p>
               <div className="hero-cta">
                 <a className="btn gold" href="#what">See how it works</a>
               </div>
               <div className="hero-proof">
                 <div className="avatar-stack" id="avatarStack"></div>
-                <span><strong>Founders, investors, operators</strong> &mdash; the Legends network shows up in the room.</span>
+                <span><strong>Founders, investors, operators</strong> &mdash; this is who makes up the Legends network.</span>
               </div>
             </div>
             <div className="mosaic reveal" id="mosaic">
@@ -240,8 +240,8 @@ export default function Page() {
             <div className="pin-photos reveal no-slide" id="pinPhotos"></div>
             <div className="pin-card reveal no-slide">
               <p className="eyebrow">The Legends Network</p>
-              <h2>Not a stage full of strangers &mdash; people already in the room.</h2>
-              <p>Every InvestHack guest already has a track record inside Legends: the same names you'd meet at a closed room, a dinner, or a co-investment call.</p>
+              <h2>Not a stage full of strangers &mdash; people already in the network.</h2>
+              <p>Every InvestHack guest already has a track record inside Legends: the same names you'd meet at a member session, a dinner, or a co-investment call.</p>
             </div>
           </div>
         </section>
@@ -251,19 +251,19 @@ export default function Page() {
             <div className="kicker reveal"><span className="num">01</span><span className="eyebrow">What it is</span></div>
             <div className="define-grid">
               <div className="define-copy">
-                <h2 className="reveal">What did this person learn by making the decision everyone else only discusses?</h2>
-                <p className="lead reveal">One founder or investor. One real decision, taken apart for the room &mdash; not the highlight reel.</p>
+                <h2 className="reveal">How InvestHack actually works</h2>
+                <p className="lead reveal">One founder or investor takes apart a single real decision, live, in front of the Legends network &mdash; then stays on, off the record, with the members who don't leave.</p>
                 <div className="tag-row reveal">
-                  <span className="deftag">One guest, no panels</span>
-                  <span className="deftag">Unscripted, on the record</span>
-                  <span className="deftag">Zero slides written for the event</span>
+                  <span className="deftag">Built for investors &amp; founders</span>
+                  <span className="deftag">One real decision, not a highlight reel</span>
+                  <span className="deftag">Continues with the network, unscripted</span>
                 </div>
               </div>
               <div className="stats-row reveal">
                 <div className="stat-card"><div className="n">60&ndash;70<span>min</span></div><div className="l">Public session, on the record</div></div>
-                <div className="stat-card"><div className="n">30<span>min</span></div><div className="l">Closed room, members only</div></div>
-                <div className="stat-card"><div className="n"><span>1</span></div><div className="l">Guest per session &mdash; no panels</div></div>
-                <div className="stat-card"><div className="n"><span>0</span></div><div className="l">Slides written for the event</div></div>
+                <div className="stat-card"><div className="n">30<span>min</span></div><div className="l">Continues with the network, off the record</div></div>
+                <div className="stat-card"><div className="n"><span>1</span></div><div className="l">Guest per session &mdash; never a panel</div></div>
+                <div className="stat-card"><div className="n">100<span>%</span></div><div className="l">Investors, founders &amp; operators &mdash; no spectators</div></div>
               </div>
             </div>
           </div>
@@ -285,8 +285,8 @@ export default function Page() {
               </div>
               <div className="phase">
                 <span className="step">Phase two &middot; Closed</span>
-                <h3>The closed room</h3>
-                <p>The public session ends and the room doesn't. Members stay on for a smaller, unrecorded continuation with the same guest.</p>
+                <h3>The network continues</h3>
+                <p>The public session ends and the conversation doesn't. Members stay on for a smaller, unrecorded continuation with the same guest.</p>
                 <ul>
                   <li>Legends members only, camera-on</li>
                   <li>The specifics that don't go on the record</li>
@@ -338,7 +338,7 @@ export default function Page() {
               <div className="fornot-col no">
                 <h3>Not for</h3>
                 <ul>
-                  <li>Service providers pitching founders in the room</li>
+                  <li>Service providers pitching founders in the network</li>
                   <li>Anyone looking for a generic networking mixer</li>
                   <li>Passive audiences who won't ask a real question</li>
                 </ul>
@@ -355,19 +355,19 @@ export default function Page() {
               <a className="more-card" href="https://belegends.club/events" target="_blank" rel="noopener">
                 <span className="mc-label">Upcoming events</span>
                 <h4>See what's next on the calendar</h4>
-                <p>InvestHack is one date among several &mdash; Meet the Legends and Closed Room sessions run alongside it.</p>
+                <p>InvestHack is one date among several &mdash; Meet the Legends sessions and closed member continuations run alongside it.</p>
                 <span className="mc-link">See the calendar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
               </a>
               <a className="more-card dark" href="https://belegends.club/blog" target="_blank" rel="noopener">
                 <span className="mc-label">The Legends blog</span>
-                <h4>What the room doesn't always say out loud</h4>
-                <p>Founder and investor thinking, written up after the closed room empties out.</p>
+                <h4>What doesn't always get said out loud</h4>
+                <p>Founder and investor thinking, written up after the network stops talking on the record.</p>
                 <span className="mc-link">Read the blog <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
               </a>
               <a className="more-card gold" href="https://belegends.club/" target="_blank" rel="noopener">
                 <span className="mc-label">About Legends</span>
                 <h4>The network InvestHack lives inside</h4>
-                <p>Who's actually in the room, how membership works, and why it stays this small.</p>
+                <p>Who's actually in the network, how membership works, and why it stays this small.</p>
                 <span className="mc-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
               </a>
             </div>
@@ -379,8 +379,8 @@ export default function Page() {
             <div className="closing-card reveal">
               <div className="closing-inner">
                 <p className="eyebrow" style={{color: 'var(--gold-soft)'}}>Next InvestHack</p>
-                <h2>The room is kept intentionally small. Apply, and we'll tell you if it's a fit.</h2>
-                <p>Seats for the public session are limited and the closed room is members-only. Applications are reviewed individually &mdash; no open registration link, no waitlist spam.</p>
+                <h2>The network is kept intentionally small. Apply, and we'll tell you if it's a fit.</h2>
+                <p>Seats for the public session are limited and the member continuation afterward is members-only. Applications are reviewed individually &mdash; no open registration link, no waitlist spam.</p>
                 <div className="hero-cta">
                   <a className="btn gold" href="https://belegends.club/" target="_blank" rel="noopener">Apply to attend</a>
                   <a className="btn ghost" href="#top">Back to top</a>
