@@ -268,9 +268,9 @@ export default function Page() {
           <div className="pin-sticky">
             <div className="pin-photos reveal no-slide" id="pinPhotos"></div>
             <div className="pin-card reveal no-slide">
-              <p className="eyebrow">The Legends Network</p>
-              <h2>Not a stage full of strangers &mdash; people already in the network.</h2>
-              <p>Every InvestHack guest already has a track record inside Legends: the same names you'd meet at a member session, a dinner, or a co-investment call.</p>
+              <p className="eyebrow">Who takes the stage</p>
+              <h2>Not a stage full of strangers &mdash; operators who've actually done it.</h2>
+              <p>Every InvestHack guest is invited for one reason: a real, verifiable track record &mdash; rounds raised, companies built, and hard calls made under pressure.</p>
             </div>
           </div>
         </section>
@@ -289,10 +289,10 @@ export default function Page() {
                 </div>
               </div>
               <div className="stats-row reveal">
-                <div className="stat-card"><div className="n">60&ndash;70<span>min</span></div><div className="l">Public session, on the record</div></div>
+                <div className="stat-card"><div className="n">60<span>min</span></div><div className="l">Public session, on the record</div></div>
                 <div className="stat-card"><div className="n">30<span>min</span></div><div className="l">Continues with the network, off the record</div></div>
                 <div className="stat-card"><div className="n"><span>1</span></div><div className="l">Guest per session &mdash; never a panel</div></div>
-                <div className="stat-card"><div className="n">100<span>%</span></div><div className="l">Investors, founders &amp; operators &mdash; no spectators</div></div>
+                <div className="stat-card"><div className="n">100<span>%</span></div><div className="l">Investors, founders &amp; operators only</div></div>
               </div>
             </div>
           </div>
@@ -307,7 +307,7 @@ export default function Page() {
                 <h3>The public session</h3>
                 <p>A conversation, not an interview. One guest, one host, one real result &mdash; taken apart in front of everyone who registered.</p>
                 <ul>
-                  <li>Streamed live, 60&ndash;70 minutes</li>
+                  <li>Streamed live, 60 minutes</li>
                   <li>Built around one decision, not a career recap</li>
                   <li>Audience questions taken on the record</li>
                 </ul>
@@ -343,10 +343,10 @@ export default function Page() {
 
         <section id="speakers">
           <div className="wrap">
-            <div className="kicker reveal"><span className="num">04</span><span className="eyebrow">Faces from the network</span></div>
+            <div className="kicker reveal"><span className="num">04</span><span className="eyebrow">Who's on stage</span></div>
             <div className="speakers-head reveal">
-              <h2 style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '620px'}}>One guest per session, drawn from people already inside Legends.</h2>
-              <p>InvestHack guests come from the same network you see across Legends &mdash; founders, operators and investors who've actually made the call being discussed.</p>
+              <h2 style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '620px'}}>One guest per session &mdash; an investor or founder with a track record worth taking apart.</h2>
+              <p>InvestHack guests are invited specialists &mdash; founders, operators and investors with a real track record: raising capital, scaling companies, and solving the exact problem being discussed.</p>
             </div>
             <div className="speaker-grid reveal" id="speakerGrid"></div>
           </div>
@@ -379,7 +379,7 @@ export default function Page() {
         <section className="more tight">
           <div className="wrap">
             <div className="kicker reveal"><span className="eyebrow">Beyond this one session</span></div>
-            <h2 className="reveal" style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '760px', marginBottom: '40px'}}>InvestHack is one event inside a bigger network.</h2>
+            <h2 className="reveal" style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '760px', marginBottom: '40px'}}>Legends is bigger than this one event.</h2>
             <div className="more-grid reveal">
               <a className="more-card" href="https://belegends.club/events" target="_blank" rel="noopener">
                 <span className="mc-label">Upcoming events</span>
@@ -399,6 +399,11 @@ export default function Page() {
                 <p>Who's actually in the network, how membership works, and why it stays this small.</p>
                 <span className="mc-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
               </a>
+              <div className="more-card soon">
+                <span className="mc-label">Coming soon</span>
+                <h4>Demo Day</h4>
+                <p>In-person conferences and meetups that take the network off the screen &mdash; the next format Legends is building.</p>
+              </div>
             </div>
           </div>
         </section>

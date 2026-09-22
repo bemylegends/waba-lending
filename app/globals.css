@@ -309,7 +309,7 @@
   .fornot-col.no li{color:var(--ink-muted);font-weight:400}
 
   /* ---------- more from legends ---------- */
-  .more-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .more-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
   .more-card{
     display:flex;flex-direction:column;gap:14px;text-decoration:none;color:var(--ink);
     background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-lg);
@@ -333,6 +333,13 @@
   .more-card.gold .mc-label{color:#4A3510}
   .more-card.gold p{color:#4A3510}
   .more-card.gold .mc-link{color:#231A08}
+  .more-card.soon{
+    background:transparent;border:1px dashed var(--line-strong);color:var(--ink-muted);
+    transition:border-color .3s ease;
+  }
+  .more-card.soon:hover{transform:none;box-shadow:none;border-color:var(--gold-wash-2)}
+  .more-card.soon .mc-label{color:var(--ink-faint)}
+  .more-card.soon h4{color:var(--ink)}
 
   /* ---------- closing cta ---------- */
   .closing{padding:0}
