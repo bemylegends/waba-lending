@@ -164,8 +164,9 @@ export default function Page() {
         // chip parallax only — visibility (fade in/out) is handled by the shared
         // reveal/IntersectionObserver system below, so the block never sits invisible
         // while it's plainly on screen (was the "looks glitchy" bug)
+        // desktop only: on mobile the section is a static stacked layout (see CSS), no scroll-driven transform
         var pinSection = document.getElementById('pinFeature');
-        if(!reduced){
+        if(!reduced && !window.matchMedia('(max-width:980px)').matches){
           var ticking = false;
           function updatePin(){
             ticking = false;
@@ -222,6 +223,7 @@ export default function Page() {
         // assets, just canvas — replaces the old video mark with something that visualizes the
         // actual idea (AI-matched introductions inside a private network) instead of a stock clip.
         (function(){
+          if(window.matchMedia('(max-width:980px)').matches) return; // hidden on mobile — don't bother animating it
           var canvas = document.getElementById('networkCanvas');
           if(!canvas || !canvas.getContext) return;
           var ctx = canvas.getContext('2d');
