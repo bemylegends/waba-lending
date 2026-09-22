@@ -87,10 +87,10 @@ export default function Page() {
         // atmosphere = venue / group imagery (not the named speakers, who already have their own section) —
         // each entry points at a real photo in /public/atmosphere; falls back to a themed icon tile if `img` is empty.
         var atmosphere = [
-          {icon:'venue', caption:"Inside a session", g:["#E0A83D","#BE8C2B"], img:"/atmosphere/spotlight.jpg"},
+          {icon:'venue', caption:"Where it starts", g:["#E0A83D","#BE8C2B"], img:"/atmosphere/spotlight.jpg"},
           {icon:'group', caption:"The network, together", g:["#D4AD5A","#9C6E22"], img:"/atmosphere/group.jpg"},
-          {icon:'mingle', caption:"Before it starts", g:["#E7C066","#B87F1E"], img:"/atmosphere/card.jpg"},
-          {icon:'space', caption:"Where it happens", g:["#DDA83F","#8F6420"], img:"/atmosphere/venue-empty.jpg"}
+          {icon:'mingle', caption:"Where deals happen", g:["#E7C066","#B87F1E"], img:"/atmosphere/card.jpg"},
+          {icon:'space', caption:"Set for the room", g:["#DDA83F","#8F6420"], img:"/atmosphere/venue-empty.jpg"}
         ];
         var atmosphereIcons = {
           venue:'<path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/>',
@@ -216,6 +216,37 @@ export default function Page() {
             document.querySelectorAll('.mcard').forEach(function(card){ card.style.transform = ''; });
           });
         }
+
+        // hero crystal video -> luma-keyed canvas (desktop only, hidden entirely on mobile via CSS)
+        if(!window.matchMedia('(max-width:980px)').matches){
+          var cVideo = document.getElementById('crystalVideo');
+          var cCanvas = document.getElementById('crystalCanvas');
+          if(cVideo && cCanvas){
+            var cCtx = cCanvas.getContext('2d', {willReadFrequently:true});
+            var cW = cCanvas.width, cH = cCanvas.height;
+            var cReady = false;
+            var cDraw = function(){
+              if(cVideo.readyState >= 2){
+                try{
+                  cCtx.drawImage(cVideo, 0, 0, cW, cH);
+                  var frame = cCtx.getImageData(0, 0, cW, cH);
+                  var d = frame.data;
+                  for(var i=0; i<d.length; i+=4){
+                    var r=d[i], g=d[i+1], b=d[i+2];
+                    d[i+3] = r>g ? (r>b?r:b) : (g>b?g:b);
+                  }
+                  cCtx.putImageData(frame, 0, 0);
+                  if(!cReady){ cReady = true; cCanvas.classList.add('is-ready'); }
+                }catch(e){}
+              }
+              requestAnimationFrame(cDraw);
+            };
+            if(!reduced){
+              cVideo.play().catch(function(){});
+              requestAnimationFrame(cDraw);
+            }
+          }
+        }
       }catch(e){}
   }, []);
 
@@ -227,13 +258,11 @@ export default function Page() {
         <div className="nav-inner">
           <a className="brand" href="#top">
             <img src="/legends-logo.png" alt="Legends" />
-            <span className="brand-text"><span className="divider">/</span><span className="tag">InvestHack</span></span>
           </a>
           <nav className="links">
             <a href="#what">What it is</a>
-            <a href="#format">Format</a>
-            <a href="#hacks">The hacks</a>
-            <a href="#speakers">Speakers</a>
+            <a href="#product">The product</a>
+            <a href="#speakers">InvestHack</a>
           </nav>
         </div>
       </header>
@@ -243,23 +272,23 @@ export default function Page() {
         <section className="hero">
           <div className="wrap hero-grid">
             <div className="hero-lead reveal">
-              <p className="eyebrow">Legends Event Format &middot; InvestHack</p>
-              <h1>The <span className="accent">real numbers</span> behind a raise, told by the person who did it.</h1>
-              <p className="sub">InvestHack is not a pitch night. It's operating knowledge behind a specific result &mdash; the decisions, the systems, the mistakes &mdash; pulled out of one founder or investor in public, then finished in private with the network.</p>
-              <div className="hero-cta">
-                <a className="btn gold" href="#what">See how it works</a>
-              </div>
+              <p className="eyebrow">Legends Platform &middot; Private Investor Network</p>
+              <h1>The private platform for investors who <span className="accent">move markets</span></h1>
+              <p className="sub">Legends is a private network and platform for investors, founders and operators &mdash; introductions matched by AI, vetted by the network. InvestHack is one of the ways we surface real operating knowledge &mdash; the decisions, the systems, the mistakes &mdash; pulled out of one founder or investor in public, then finished in private with the network.</p>
               <div className="hero-proof">
                 <div className="avatar-stack" id="avatarStack"></div>
                 <span><strong>Founders, investors, operators</strong> &mdash; this is who makes up the Legends network.</span>
               </div>
             </div>
             <div className="mosaic reveal" id="mosaic">
-              <div className="mcard m1" data-people="0"></div>
-              <div className="mcard m2" data-people="1"></div>
-              <div className="mcard m3" data-people="2"></div>
-              <div className="mcard m4" data-people="3"></div>
-              <div className="mcard m5" data-people="4"></div>
+              <div className="hero-visual-inner">
+                <img className="hero-visual-poster" src="/legends-crystal-poster.png" alt="Legends" />
+                <canvas className="hero-visual-canvas" id="crystalCanvas" width="600" height="594" aria-hidden="true"></canvas>
+                <video id="crystalVideo" muted loop playsInline preload="auto" aria-hidden="true" style={{position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none'}}>
+                  <source src="/legends-crystal.webm" type="video/webm" />
+                  <source src="/legends-crystal.mp4" type="video/mp4" />
+                </video>
+              </div>
             </div>
           </div>
         </section>
@@ -268,9 +297,9 @@ export default function Page() {
           <div className="pin-sticky">
             <div className="pin-photos reveal no-slide" id="pinPhotos"></div>
             <div className="pin-card reveal no-slide">
-              <p className="eyebrow">Who takes the stage</p>
-              <h2>Not a stage full of strangers &mdash; operators who've actually done it.</h2>
-              <p>Every InvestHack guest is invited for one reason: a real, verifiable track record &mdash; rounds raised, companies built, and hard calls made under pressure.</p>
+              <p className="eyebrow">How Legends works</p>
+              <h2>A working network, not a directory.</h2>
+              <p>AI-matched introductions, vetted events, and a trusted circle &mdash; built for operators who move markets, not people collecting connections.</p>
             </div>
           </div>
         </section>
@@ -280,73 +309,42 @@ export default function Page() {
             <div className="kicker reveal"><span className="num">01</span><span className="eyebrow">What it is</span></div>
             <div className="define-grid">
               <div className="define-copy">
-                <h2 className="reveal">How InvestHack actually works</h2>
-                <p className="lead reveal">One founder or investor takes apart a single real decision, live, in front of the Legends network &mdash; then stays on, off the record, with the members who don't leave.</p>
+                <h2 className="reveal">The AI-powered private network for decision-makers who move markets.</h2>
+                <p className="lead reveal">Legends matches you with the right people, then puts you in the room &mdash; introductions filtered to your level, private events, and a trusted circle. AI does the networking. You make the moves.</p>
                 <div className="tag-row reveal">
-                  <span className="deftag">Built for investors &amp; founders</span>
-                  <span className="deftag">One real decision, not a highlight reel</span>
-                  <span className="deftag">Continues with the network, unscripted</span>
+                  <span className="deftag">AI-matched introductions</span>
+                  <span className="deftag">Private events, not noise</span>
+                  <span className="deftag">Founders, investors &amp; C-level only</span>
                 </div>
               </div>
               <div className="stats-row reveal">
-                <div className="stat-card"><div className="n">60<span>min</span></div><div className="l">Public session, on the record</div></div>
-                <div className="stat-card"><div className="n">30<span>min</span></div><div className="l">Continues with the network, off the record</div></div>
-                <div className="stat-card"><div className="n"><span>1</span></div><div className="l">Guest per session &mdash; never a panel</div></div>
-                <div className="stat-card"><div className="n">100<span>%</span></div><div className="l">Investors, founders &amp; operators only</div></div>
+                <div className="stat-card"><div className="n" style={{fontSize: '20px'}}>Matching</div><div className="l">AI-filtered introductions at your level</div></div>
+                <div className="stat-card"><div className="n" style={{fontSize: '20px'}}>Opportunities</div><div className="l">Private posts for capital, partners and deals</div></div>
+                <div className="stat-card"><div className="n" style={{fontSize: '20px'}}>Introductions</div><div className="l">Reviewed and vetted before you connect</div></div>
+                <div className="stat-card"><div className="n" style={{fontSize: '20px'}}>Events</div><div className="l">Private online rooms and closed offline gatherings</div></div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="tight" id="format">
+        <section className="topics" id="product">
           <div className="wrap">
-            <div className="kicker reveal"><span className="num">02</span><span className="eyebrow">Format</span></div>
-            <div className="format-grid reveal">
-              <div className="phase">
-                <span className="step">Phase one &middot; Open</span>
-                <h3>The public session</h3>
-                <p>A conversation, not an interview. One guest, one host, one real result &mdash; taken apart in front of everyone who registered.</p>
-                <ul>
-                  <li>Streamed live, 60 minutes</li>
-                  <li>Built around one decision, not a career recap</li>
-                  <li>Audience questions taken on the record</li>
-                </ul>
-              </div>
-              <div className="phase">
-                <span className="step">Phase two &middot; Closed</span>
-                <h3>The network continues</h3>
-                <p>The public session ends and the conversation doesn't. Members stay on for a smaller, unrecorded continuation with the same guest.</p>
-                <ul>
-                  <li>Legends members only, camera-on</li>
-                  <li>The specifics that don't go on the record</li>
-                  <li>Direct follow-up with the guest, not a moderator</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="topics" id="hacks">
-          <div className="wrap">
-            <div className="kicker reveal"><span className="num">03</span><span className="eyebrow">The hacks</span></div>
-            <h2 className="reveal" style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '760px', marginBottom: '40px'}}>Every session is built around one working problem, not a theme.</h2>
-            <div className="topic-grid reveal">
-              <div className="topic"><div className="ic">01</div><h4>Raising with no revenue</h4><p>What actually stands in for traction when there isn't any yet &mdash; and what investors quietly check instead.</p></div>
-              <div className="topic"><div className="ic">02</div><h4>The cap table decision you can't undo</h4><p>Which early terms come back to bite a founder at Series B, and how to spot them before signing.</p></div>
-              <div className="topic"><div className="ic">03</div><h4>Walking away from a term sheet</h4><p>The moment a founder or fund decided a deal wasn't worth taking, and what they did next.</p></div>
-              <div className="topic"><div className="ic">04</div><h4>Pricing a round in a cold market</h4><p>How a lead investor actually sets a number when comps have disappeared and everyone is nervous.</p></div>
-              <div className="topic"><div className="ic">05</div><h4>The founder&ndash;investor fight nobody discloses</h4><p>A real disagreement between a board and a founder, and how it got resolved &mdash; or didn't.</p></div>
-              <div className="topic"><div className="ic">06</div><h4>Rebuilding after a failed raise</h4><p>What changes operationally in the ninety days after a round falls through.</p></div>
+            <div className="kicker reveal"><span className="num">02</span><span className="eyebrow">The product</span></div>
+            <h2 className="reveal" style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '760px', marginBottom: '40px'}}>Three ways to be inside the network. One rule &mdash; you deploy capital.</h2>
+            <div className="topic-grid reveal" style={{gridTemplateColumns: 'repeat(3,1fr)'}}>
+              <div className="topic"><div className="ic">01</div><h4>Private</h4><p>Angels, LPs, syndicate leads and family offices who deploy only their own capital and don't raise.</p></div>
+              <div className="topic"><div className="ic">02</div><h4>Fund</h4><p>GPs, fund partners and family offices who raise outside capital or bring co-investors into their own deals.</p></div>
+              <div className="topic"><div className="ic">03</div><h4>Corporate</h4><p>Corporate venture arms, corporate development and strategic investors.</p></div>
             </div>
           </div>
         </section>
 
         <section id="speakers">
           <div className="wrap">
-            <div className="kicker reveal"><span className="num">04</span><span className="eyebrow">Who's on stage</span></div>
+            <div className="kicker reveal"><span className="num">03</span><span className="eyebrow">InvestHack</span></div>
             <div className="speakers-head reveal">
-              <h2 style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '620px'}}>One guest per session &mdash; an investor or founder with a track record worth taking apart.</h2>
-              <p>InvestHack guests are invited specialists &mdash; founders, operators and investors with a real track record: raising capital, scaling companies, and solving the exact problem being discussed.</p>
+              <h2 style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '620px'}}>The people behind our InvestHack sessions.</h2>
+              <p>Investors, founders and operators with a real track record &mdash; raising capital, scaling companies, and solving problems other builders are still facing. These are the people who take part in Legends InvestHack, in front of the network.</p>
             </div>
             <div className="speaker-grid reveal" id="speakerGrid"></div>
           </div>
@@ -354,22 +352,22 @@ export default function Page() {
 
         <section className="fornot tight">
           <div className="wrap">
-            <div className="kicker reveal"><span className="num">05</span><span className="eyebrow">Who it's for</span></div>
+            <div className="kicker reveal"><span className="num">04</span><span className="eyebrow">Who it's for</span></div>
             <div className="fornot-grid reveal">
               <div className="fornot-col yes">
                 <h3>Come if you are</h3>
                 <ul>
-                  <li>A founder raising, or about to</li>
-                  <li>An angel or fund partner writing checks</li>
-                  <li>An operator who wants the mechanics, not the highlight reel</li>
+                  <li>An angel, LP or syndicate lead deploying your own capital</li>
+                  <li>A GP or fund partner raising outside capital</li>
+                  <li>A corporate venture, development or strategic investor</li>
                 </ul>
               </div>
               <div className="fornot-col no">
                 <h3>Not for</h3>
                 <ul>
-                  <li>Service providers pitching founders in the network</li>
+                  <li>Anyone who isn't on the investing side of the table</li>
+                  <li>Service providers pitching products to the network</li>
                   <li>Anyone looking for a generic networking mixer</li>
-                  <li>Passive audiences who won't ask a real question</li>
                 </ul>
               </div>
             </div>
@@ -378,8 +376,8 @@ export default function Page() {
 
         <section className="more tight">
           <div className="wrap">
-            <div className="kicker reveal"><span className="eyebrow">Beyond this one session</span></div>
-            <h2 className="reveal" style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '760px', marginBottom: '40px'}}>Legends is bigger than this one event.</h2>
+            <div className="kicker reveal"><span className="eyebrow">Explore more</span></div>
+            <h2 className="reveal" style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '760px', marginBottom: '40px'}}>More from the Legends platform.</h2>
             <div className="more-grid reveal">
               <a className="more-card" href="https://belegends.club/events" target="_blank" rel="noopener">
                 <span className="mc-label">Upcoming events</span>
@@ -412,13 +410,9 @@ export default function Page() {
           <div className="wrap">
             <div className="closing-card reveal">
               <div className="closing-inner">
-                <p className="eyebrow" style={{color: 'var(--gold-soft)'}}>Next InvestHack</p>
-                <h2>The network is kept intentionally small. Apply, and we'll tell you if it's a fit.</h2>
-                <p>Seats for the public session are limited and the member continuation afterward is members-only. Applications are reviewed individually &mdash; no open registration link, no waitlist spam.</p>
-                <div className="hero-cta">
-                  <a className="btn gold" href="https://belegends.club/" target="_blank" rel="noopener">Apply to attend</a>
-                  <a className="btn ghost" href="#top">Back to top</a>
-                </div>
+                <p className="eyebrow" style={{color: 'var(--gold-soft)'}}>Legends Platform</p>
+                <h2>A private network for people who move markets &mdash; kept intentionally small.</h2>
+                <p>Every introduction, event and session is filtered to keep the circle sharp: investors, founders and operators who deploy capital and build with it &mdash; not open registration, not noise.</p>
               </div>
             </div>
           </div>
@@ -427,15 +421,21 @@ export default function Page() {
       </main>
 
       <footer>
-        <div className="wrap foot-inner">
-          <div className="foot-brand">
-            <img src="/legends-logo.png" alt="Legends" />
-            <span>InvestHack is part of the Legends event system</span>
+        <div className="wrap">
+          <div className="foot-inner">
+            <div className="foot-brand">
+              <img src="/legends-logo.png" alt="Legends" />
+              <span>InvestHack is one of the Legends platform's event formats</span>
+            </div>
+            <div className="foot-links">
+              <a href="https://belegends.club/" target="_blank" rel="noopener">belegends.club</a>
+              <a href="#what">What it is</a>
+              <a href="#speakers">InvestHack</a>
+              <a href="/privacy">Privacy Policy</a>
+            </div>
           </div>
-          <div className="foot-links">
-            <a href="https://belegends.club/" target="_blank" rel="noopener">belegends.club</a>
-            <a href="#what">What it is</a>
-            <a href="#speakers">Speakers</a>
+          <div className="foot-legal">
+            <p>AVELYTH PLATFORM LTD &middot; Arch. Makariou III, 115, 3021, Limassol, Cyprus &middot; Phone: <em>pending &mdash; to be added</em></p>
           </div>
         </div>
       </footer>

@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'InvestHack',
-  description: 'InvestHack — the Legends event format: a public session, then a closed room, with people already inside the network.',
+  title: 'Legends — The Private Platform for Investors',
+  description: 'Legends is the private platform and network for investors, founders and operators — AI-matched introductions, vetted events, and a trusted circle.',
 };
 
 export default function RootLayout({ children }) {
