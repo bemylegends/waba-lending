@@ -391,9 +391,14 @@
     .stats-row{grid-template-columns:1fr 1fr}
     .topic-grid{grid-template-columns:1fr}
     .speaker-grid{grid-template-columns:1fr}
-    .mosaic{height:280px}
-    .mcard{width:130px !important;padding:12px}
-    .mcard .face{font-size:20px}
+    .mosaic{height:380px}
+    .mcard{width:112px !important;padding:10px}
+    .mcard .face{font-size:18px}
+    .m1{top:0%;left:2%}
+    .m2{top:2%;left:48%}
+    .m3{top:30%;left:24%}
+    .m4{top:26%;left:0%}
+    .m5{top:40%;left:50%}
   }
   @media (prefers-reduced-motion:reduce){
     .js .reveal{opacity:1;transform:none}
