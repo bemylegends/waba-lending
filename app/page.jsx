@@ -18,6 +18,11 @@ export default function Page() {
           {name:"Alex Felman", role:"General Partner, Felman Family Office", g:["#EFCB74","#C2902A"], img:"https://belegends.club/api/files/pbc_2443081517/kfzgg99w8mivqcf/alex_f_lend_tk1a658sfq.png"}
         ];
         function initials(n){ return n.split(" ").map(function(w){return w[0]}).join("").slice(0,2).toUpperCase(); }
+        // transparent-background PNG cutouts have no photographic vignette of their own, so they get a
+        // neutral gray radial "halo" behind them instead of the gold tile — this is what makes them read
+        // like the naturally-vignetted studio shots (e.g. Vijay's) rather than a flat cutout on a gold card.
+        function isPngCutout(p){ return /\.png(\?|$)/i.test(p.img); }
+        function grayHaloBg(){ return 'radial-gradient(ellipse 78% 82% at 50% 38%,#9a9a9a 0%,#6b6b6b 45%,#3c3c3c 100%)'; }
         function faceEl(p, size){
           // real photo with graceful fallback to a monogram tile if the host can't load it
           var img = document.createElement('img');
@@ -58,7 +63,7 @@ export default function Page() {
           if(!p) return;
           var face = document.createElement('div');
           face.className = 'face';
-          face.style.background = 'linear-gradient(135deg,'+p.g[0]+','+p.g[1]+')';
+          face.style.background = isPngCutout(p) ? grayHaloBg() : 'linear-gradient(135deg,'+p.g[0]+','+p.g[1]+')';
           face.appendChild(faceEl(p));
           var nm = document.createElement('div'); nm.className='mname'; nm.textContent = p.name;
           var rl = document.createElement('div'); rl.className='mrole'; rl.textContent = p.role;
@@ -72,7 +77,7 @@ export default function Page() {
           card.className = 'speaker';
           var av = document.createElement('div');
           av.className = 'avatar';
-          av.style.background = 'linear-gradient(135deg,'+p.g[0]+','+p.g[1]+')';
+          av.style.background = isPngCutout(p) ? grayHaloBg() : 'linear-gradient(135deg,'+p.g[0]+','+p.g[1]+')';
           av.appendChild(faceEl(p));
           var nm = document.createElement('div'); nm.className='name'; nm.textContent = p.name;
           var rl = document.createElement('div'); rl.className='role'; rl.textContent = p.role;
@@ -80,7 +85,21 @@ export default function Page() {
           grid.appendChild(card);
         });
 
-        // pinned parallax feature: sticky card, real people + brand facts sweeping past — fast, roomy, varied
+        // pinned parallax feature: sticky card, atmosphere shots + brand facts sweeping past — fast, roomy, varied.
+        // atmosphere = venue / group imagery (not the named speakers, who already have their own section) —
+        // each entry points at a real photo in /public/atmosphere; falls back to a themed icon tile if `img` is empty.
+        var atmosphere = [
+          {icon:'venue', caption:"Inside a session", g:["#E0A83D","#BE8C2B"], img:"/atmosphere/spotlight.jpg"},
+          {icon:'group', caption:"The network, together", g:["#D4AD5A","#9C6E22"], img:"/atmosphere/group.jpg"},
+          {icon:'mingle', caption:"Before it starts", g:["#E7C066","#B87F1E"], img:"/atmosphere/card.jpg"},
+          {icon:'space', caption:"Where it happens", g:["#DDA83F","#8F6420"], img:"/atmosphere/venue-empty.jpg"}
+        ];
+        var atmosphereIcons = {
+          venue:'<path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/>',
+          group:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20v-1.3A4.4 4.4 0 0 1 7.4 14.3h3.2A4.4 4.4 0 0 1 15 18.7V20"/><circle cx="17.2" cy="8.4" r="2.4"/><path d="M15.6 14.4A3.9 3.9 0 0 1 21 18v2"/>',
+          mingle:'<path d="M4 5h16v10H8l-4 4V5z"/><path d="M8 9h8M8 12h5"/>',
+          space:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16"/><path d="M10 10v10"/>'
+        };
         var facts = [
           {text:"AI-powered network", bg:"#241A07", cls:"on-dark"},
           {text:"Founders & investors", bg:"linear-gradient(135deg,#E0A83D,#BE8C2B)", cls:""},
@@ -88,18 +107,19 @@ export default function Page() {
           {text:"Session, then the network", bg:"var(--surface)", cls:"bordered"},
           {text:"Person first.", bg:"#241A07", cls:"on-dark"}
         ];
-        // spread across the full width — left, center (free to sit over the card), right — mixing photos and facts.
-        // on narrow screens only the un-hidden entries survive, so those are kept balanced left/right on their own
-        // (see keep-mobile logic below) — the 4 photo chips carry that job, facts are decorative extras on wide screens.
+        // spread across the full width — left, center (free to sit over the card), right — mixing atmosphere
+        // tiles and facts. on narrow screens only the un-hidden entries survive, so those are kept balanced
+        // left/right on their own (see keep-mobile logic below) — the 4 atmosphere chips carry that job,
+        // facts are decorative extras on wide screens.
         var pinLayout = [
-          {top:"0%",  left:"7%",  w:220, h:230, from:30,  to:-25, type:"photo", p:0},
+          {top:"0%",  left:"7%",  w:220, h:230, from:30,  to:-25, type:"atmosphere", a:0},
           {top:"3%",  left:"40%", w:220, h:160, from:-32, to:34,  type:"fact",  f:0, mobileHide:true},
-          {top:"6%",  left:"80%", w:210, h:190, from:-26, to:30,  type:"photo", p:1},
+          {top:"6%",  left:"80%", w:210, h:190, from:-26, to:30,  type:"atmosphere", a:1},
           {top:"46%", left:"11%", w:210, h:160, from:32,  to:-30, type:"fact",  f:3, mobileHide:true},
           {top:"48%", left:"68%", w:210, h:160, from:-28, to:32,  type:"fact",  f:1, mobileHide:true},
-          {top:"80%", left:"5%",  w:220, h:180, from:26,  to:-30, type:"photo", p:2},
+          {top:"80%", left:"5%",  w:220, h:180, from:26,  to:-30, type:"atmosphere", a:2},
           {top:"82%", left:"43%", w:220, h:150, from:28,  to:-34, type:"fact",  f:2, mobileHide:true},
-          {top:"76%", left:"77%", w:210, h:210, from:-30, to:28,  type:"photo", p:3}
+          {top:"76%", left:"77%", w:210, h:210, from:-30, to:28,  type:"atmosphere", a:3}
         ];
         var pinPhotos = document.getElementById('pinPhotos');
         var pinChips = pinLayout.map(function(spot){
@@ -109,16 +129,27 @@ export default function Page() {
           chip.style.left = spot.left;
           chip.style.width = spot.w + 'px';
           chip.style.height = spot.h + 'px';
-          if(spot.type === 'photo'){
-            var p = people[spot.p % people.length];
+          if(spot.type === 'atmosphere'){
+            var a = atmosphere[spot.a % atmosphere.length];
             var fill = document.createElement('div');
             fill.className = 'photo-fill';
-            fill.style.background = 'linear-gradient(135deg,'+p.g[0]+','+p.g[1]+')';
-            fill.appendChild(faceEl(p));
+            fill.style.background = 'linear-gradient(135deg,'+a.g[0]+','+a.g[1]+')';
+            if(a.img){
+              // once a real photo URL is set on this entry, it replaces the icon automatically
+              var img = document.createElement('img');
+              img.src = a.img; img.alt = a.caption; img.loading = 'lazy';
+              img.onerror = function(){ img.remove(); };
+              fill.appendChild(img);
+            } else {
+              var ic = document.createElement('div');
+              ic.className = 'atmo-icon';
+              ic.innerHTML = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2b2008" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+atmosphereIcons[a.icon]+'</svg>';
+              fill.appendChild(ic);
+            }
             chip.appendChild(fill);
             var cap = document.createElement('div');
             cap.className = 'cap';
-            cap.textContent = p.name.split(' ')[0] + ' · ' + p.role.split(',')[0];
+            cap.textContent = a.caption;
             chip.appendChild(cap);
           } else {
             var fa = facts[spot.f % facts.length];
