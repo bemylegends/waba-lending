@@ -492,24 +492,21 @@ export default function Page() {
             <div className="kicker reveal"><span className="eyebrow">Explore more</span></div>
             <h2 className="reveal" style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '760px', marginBottom: '40px'}}>More from the Legends platform.</h2>
             <div className="more-grid reveal">
-              <a className="more-card" href="https://belegends.club/events" target="_blank" rel="noopener">
+              <div className="more-card">
                 <span className="mc-label">Upcoming events</span>
                 <h4>See what's next on the calendar</h4>
                 <p>InvestHack is one date among several &mdash; Meet the Legends sessions and closed member continuations run alongside it.</p>
-                <span className="mc-link">See the calendar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a>
-              <a className="more-card dark" href="https://belegends.club/blog" target="_blank" rel="noopener">
+              </div>
+              <div className="more-card dark">
                 <span className="mc-label">The Legends blog</span>
                 <h4>What doesn't always get said out loud</h4>
                 <p>Founder and investor thinking, written up after the network stops talking on the record.</p>
-                <span className="mc-link">Read the blog <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a>
-              <a className="more-card gold" href="https://belegends.club/" target="_blank" rel="noopener">
+              </div>
+              <div className="more-card gold">
                 <span className="mc-label">About Legends</span>
                 <h4>The network InvestHack lives inside</h4>
                 <p>Who's actually in the network, how membership works, and why it stays this small.</p>
-                <span className="mc-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a>
+              </div>
               <div className="more-card soon">
                 <span className="mc-label">Coming soon</span>
                 <h4>Demo Day</h4>
