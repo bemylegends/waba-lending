@@ -217,36 +217,129 @@ export default function Page() {
           });
         }
 
-        // hero crystal video -> luma-keyed canvas (desktop only, hidden entirely on mobile via CSS)
-        if(!window.matchMedia('(max-width:980px)').matches){
-          var cVideo = document.getElementById('crystalVideo');
-          var cCanvas = document.getElementById('crystalCanvas');
-          if(cVideo && cCanvas){
-            var cCtx = cCanvas.getContext('2d', {willReadFrequently:true});
-            var cW = cCanvas.width, cH = cCanvas.height;
-            var cReady = false;
-            var cDraw = function(){
-              if(cVideo.readyState >= 2){
-                try{
-                  cCtx.drawImage(cVideo, 0, 0, cW, cH);
-                  var frame = cCtx.getImageData(0, 0, cW, cH);
-                  var d = frame.data;
-                  for(var i=0; i<d.length; i+=4){
-                    var r=d[i], g=d[i+1], b=d[i+2];
-                    d[i+3] = r>g ? (r>b?r:b) : (g>b?g:b);
-                  }
-                  cCtx.putImageData(frame, 0, 0);
-                  if(!cReady){ cReady = true; cCanvas.classList.add('is-ready'); }
-                }catch(e){}
-              }
-              requestAnimationFrame(cDraw);
-            };
-            if(!reduced){
-              cVideo.play().catch(function(){});
-              requestAnimationFrame(cDraw);
-            }
+        // hero visual: a small generative "network" — gold nodes linked by fine lines, with
+        // occasional signal pulses traveling an edge (an "introduction" being made). No media
+        // assets, just canvas — replaces the old video mark with something that visualizes the
+        // actual idea (AI-matched introductions inside a private network) instead of a stock clip.
+        (function(){
+          var canvas = document.getElementById('networkCanvas');
+          if(!canvas || !canvas.getContext) return;
+          var ctx = canvas.getContext('2d');
+          var dpr = Math.min(window.devicePixelRatio || 1, 2);
+          var W = 0, H = 0;
+          function resize(){
+            var rect = canvas.getBoundingClientRect();
+            W = rect.width; H = rect.height;
+            if(!W || !H) return;
+            canvas.width = Math.round(W * dpr);
+            canvas.height = Math.round(H * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
           }
-        }
+          resize();
+          window.addEventListener('resize', resize);
+
+          var N = 17;
+          var nodes = [];
+          for(var i=0; i<N; i++){
+            var ang = Math.random() * Math.PI * 2;
+            var f = 0.16 + Math.sqrt(Math.random()) * 0.80;
+            nodes.push({
+              ax: Math.cos(ang) * f,
+              ay: Math.sin(ang) * f,
+              phase: Math.random() * Math.PI * 2,
+              speed: 0.35 + Math.random() * 0.45,
+              drift: 0.018 + Math.random() * 0.03,
+              size: 2 + Math.random() * 2.4,
+              flashUntil: 0
+            });
+          }
+          var edges = [];
+          (function buildEdges(){
+            var used = {};
+            for(var a=0; a<nodes.length; a++){
+              var dists = [];
+              for(var b=0; b<nodes.length; b++){
+                if(a===b) continue;
+                var dx = nodes[a].ax - nodes[b].ax, dy = nodes[a].ay - nodes[b].ay;
+                dists.push({j:b, d: dx*dx + dy*dy});
+              }
+              dists.sort(function(p,q){ return p.d - q.d; });
+              var k = 2 + (Math.random() < 0.35 ? 1 : 0);
+              for(var n=0; n<k && n<dists.length; n++){
+                var j = dists[n].j;
+                var key = a < j ? (a+'_'+j) : (j+'_'+a);
+                if(!used[key]){ used[key] = true; edges.push([a, j]); }
+              }
+            }
+          })();
+
+          var pulses = [];
+          var lastSpawn = 0, spawnGap = 1000;
+
+          function frame(now){
+            if(!W){ if(!reduced) requestAnimationFrame(frame); return; }
+            var t = now * 0.001;
+            ctx.clearRect(0, 0, W, H);
+            var cx = W/2, cy = H/2, R = Math.min(W, H) / 2;
+
+            var pos = nodes.map(function(nd){
+              var dx = Math.cos(t*nd.speed + nd.phase) * nd.drift;
+              var dy = Math.sin(t*nd.speed*1.3 + nd.phase) * nd.drift * 0.8;
+              return { x: cx + (nd.ax+dx)*R, y: cy + (nd.ay+dy)*R };
+            });
+
+            ctx.lineWidth = 1;
+            for(var e=0; e<edges.length; e++){
+              var a = pos[edges[e][0]], b = pos[edges[e][1]];
+              var shimmer = 0.5 + 0.5 * Math.sin(t*0.55 + e*1.7);
+              ctx.strokeStyle = 'rgba(120,92,46,' + (0.07 + 0.10*shimmer) + ')';
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+
+            if(!reduced && now - lastSpawn > spawnGap && pulses.length < 3 && edges.length){
+              lastSpawn = now;
+              spawnGap = 900 + Math.random()*900;
+              var edge = edges[(Math.random()*edges.length)|0];
+              var flip = Math.random() < 0.5;
+              pulses.push({ a: flip?edge[1]:edge[0], b: flip?edge[0]:edge[1], born: now, dur: 900 + Math.random()*700 });
+            }
+            for(var p=pulses.length-1; p>=0; p--){
+              var pu = pulses[p];
+              var pt = (now - pu.born) / pu.dur;
+              if(pt >= 1){ nodes[pu.b].flashUntil = now + 380; pulses.splice(p,1); continue; }
+              var A = pos[pu.a], B = pos[pu.b];
+              var ease = pt < 0.5 ? 2*pt*pt : -1 + (4-2*pt)*pt;
+              var x = A.x + (B.x-A.x)*ease, y = A.y + (B.y-A.y)*ease;
+              var grd = ctx.createRadialGradient(x, y, 0, x, y, 7);
+              grd.addColorStop(0, 'rgba(243,217,152,.95)');
+              grd.addColorStop(1, 'rgba(224,168,61,0)');
+              ctx.fillStyle = grd;
+              ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI*2); ctx.fill();
+              ctx.fillStyle = '#F3D998';
+              ctx.beginPath(); ctx.arc(x, y, 2, 0, Math.PI*2); ctx.fill();
+            }
+
+            for(var i2=0; i2<pos.length; i2++){
+              var nd2 = nodes[i2], p2 = pos[i2];
+              var flashT = nd2.flashUntil > now ? (nd2.flashUntil - now) / 380 : 0;
+              var s = nd2.size * (1 + flashT*1.4);
+              var glowR = s * (flashT > 0 ? 4 : 2.3);
+              var grd2 = ctx.createRadialGradient(p2.x, p2.y, 0, p2.x, p2.y, glowR);
+              grd2.addColorStop(0, 'rgba(224,168,61,' + (0.5 + flashT*0.4) + ')');
+              grd2.addColorStop(1, 'rgba(224,168,61,0)');
+              ctx.fillStyle = grd2;
+              ctx.beginPath(); ctx.arc(p2.x, p2.y, glowR, 0, Math.PI*2); ctx.fill();
+              ctx.fillStyle = flashT > 0 ? '#F3D998' : '#BE8C2B';
+              ctx.beginPath(); ctx.arc(p2.x, p2.y, s, 0, Math.PI*2); ctx.fill();
+            }
+
+            if(!reduced) requestAnimationFrame(frame);
+          }
+          requestAnimationFrame(frame);
+        })();
       }catch(e){}
   }, []);
 
@@ -282,12 +375,8 @@ export default function Page() {
             </div>
             <div className="mosaic reveal" id="mosaic">
               <div className="hero-visual-inner">
-                <img className="hero-visual-poster" src="/legends-crystal-poster.png" alt="Legends" />
-                <canvas className="hero-visual-canvas" id="crystalCanvas" width="600" height="594" aria-hidden="true"></canvas>
-                <video id="crystalVideo" muted loop playsInline preload="auto" aria-hidden="true" style={{position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none'}}>
-                  <source src="/legends-crystal.webm" type="video/webm" />
-                  <source src="/legends-crystal.mp4" type="video/mp4" />
-                </video>
+                <canvas className="network-canvas" id="networkCanvas" aria-hidden="true"></canvas>
+                <img className="network-mark" src="/legends-symbol.png" alt="Legends" />
               </div>
             </div>
           </div>

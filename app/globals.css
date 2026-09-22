@@ -165,9 +165,11 @@
   /* ---------- hero animated crystal mark ---------- */
   .mosaic{display:flex;align-items:center;justify-content:center}
   .hero-visual-inner{position:relative;width:460px;max-width:92%;aspect-ratio:1/1;margin:0 auto}
-  .hero-visual-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-  .hero-visual-canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .6s ease}
-  .hero-visual-canvas.is-ready{opacity:1}
+  .network-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .network-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:23%;height:auto;pointer-events:none;filter:drop-shadow(0 8px 20px rgba(190,140,43,.3))}
+  @media (max-width:640px){
+    .hero-visual-inner{width:300px}
+  }
 
   /* ---------- pinned parallax feature ---------- */
   .pin-feature{position:relative;height:230vh}
@@ -394,7 +396,6 @@
   @media (max-width:980px){
     nav.links{display:none}
     .hero-grid{grid-template-columns:1fr}
-    .mosaic{display:none}
     .define-grid{grid-template-columns:1fr;gap:28px}
     .stats-row{grid-template-columns:repeat(2,1fr)}
     .format-grid{grid-template-columns:1fr}
