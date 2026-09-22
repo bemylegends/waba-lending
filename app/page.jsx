@@ -428,10 +428,10 @@ export default function Page() {
               <span>InvestHack is one of the Legends platform's event formats</span>
             </div>
             <div className="foot-links">
-              <a href="https://belegends.club/" target="_blank" rel="noopener">belegends.club</a>
               <a href="#what">What it is</a>
               <a href="#speakers">InvestHack</a>
               <a href="/privacy">Privacy Policy</a>
+              <a href="/terms">Terms of Use</a>
             </div>
           </div>
           <div className="foot-legal">
