@@ -18,10 +18,8 @@ export default function Page() {
           {name:"Alex Felman", role:"General Partner, Felman Family Office", g:["#EFCB74","#C2902A"], img:"https://belegends.club/api/files/pbc_2443081517/kfzgg99w8mivqcf/alex_f_lend_tk1a658sfq.png"}
         ];
         function initials(n){ return n.split(" ").map(function(w){return w[0]}).join("").slice(0,2).toUpperCase(); }
-        // transparent-background PNG cutouts have no photographic vignette of their own, so they get a
-        // neutral gray radial "halo" behind them instead of the gold tile — this is what makes them read
-        // like the naturally-vignetted studio shots (e.g. Vijay's) rather than a flat cutout on a gold card.
-        function isPngCutout(p){ return /\.png(\?|$)/i.test(p.img); }
+        // every speaker photo in the grid sits on this neutral gray radial "halo" now — matches the
+        // naturally-vignetted studio shots (e.g. Vijay's) instead of a per-speaker gold tile.
         function grayHaloBg(){ return 'radial-gradient(ellipse 78% 82% at 50% 38%,#9a9a9a 0%,#6b6b6b 45%,#3c3c3c 100%)'; }
         function faceEl(p, size){
           // real photo with graceful fallback to a monogram tile if the host can't load it
@@ -63,7 +61,7 @@ export default function Page() {
           if(!p) return;
           var face = document.createElement('div');
           face.className = 'face';
-          face.style.background = isPngCutout(p) ? grayHaloBg() : 'linear-gradient(135deg,'+p.g[0]+','+p.g[1]+')';
+          face.style.background = 'linear-gradient(135deg,'+p.g[0]+','+p.g[1]+')';
           face.appendChild(faceEl(p));
           var nm = document.createElement('div'); nm.className='mname'; nm.textContent = p.name;
           var rl = document.createElement('div'); rl.className='mrole'; rl.textContent = p.role;
@@ -77,7 +75,7 @@ export default function Page() {
           card.className = 'speaker';
           var av = document.createElement('div');
           av.className = 'avatar';
-          av.style.background = isPngCutout(p) ? grayHaloBg() : 'linear-gradient(135deg,'+p.g[0]+','+p.g[1]+')';
+          av.style.background = grayHaloBg();
           av.appendChild(faceEl(p));
           var nm = document.createElement('div'); nm.className='name'; nm.textContent = p.name;
           var rl = document.createElement('div'); rl.className='role'; rl.textContent = p.role;
@@ -331,7 +329,7 @@ export default function Page() {
         <section className="topics" id="hacks">
           <div className="wrap">
             <div className="kicker reveal"><span className="num">03</span><span className="eyebrow">The hacks</span></div>
-            <h2 className="reveal" style={{fontSize: 'clamp(24px,2.8vw,34px)', maxWidth: '640px', marginBottom: '40px'}}>Every session is built around one working problem, not a theme.</h2>
+            <h2 className="reveal" style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '760px', marginBottom: '40px'}}>Every session is built around one working problem, not a theme.</h2>
             <div className="topic-grid reveal">
               <div className="topic"><div className="ic">01</div><h4>Raising with no revenue</h4><p>What actually stands in for traction when there isn't any yet &mdash; and what investors quietly check instead.</p></div>
               <div className="topic"><div className="ic">02</div><h4>The cap table decision you can't undo</h4><p>Which early terms come back to bite a founder at Series B, and how to spot them before signing.</p></div>
@@ -347,7 +345,7 @@ export default function Page() {
           <div className="wrap">
             <div className="kicker reveal"><span className="num">04</span><span className="eyebrow">Faces from the network</span></div>
             <div className="speakers-head reveal">
-              <h2 style={{fontSize: 'clamp(24px,2.8vw,34px)', maxWidth: '520px'}}>One guest per session, drawn from people already inside Legends.</h2>
+              <h2 style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '620px'}}>One guest per session, drawn from people already inside Legends.</h2>
               <p>InvestHack guests come from the same network you see across Legends &mdash; founders, operators and investors who've actually made the call being discussed.</p>
             </div>
             <div className="speaker-grid reveal" id="speakerGrid"></div>
@@ -381,7 +379,7 @@ export default function Page() {
         <section className="more tight">
           <div className="wrap">
             <div className="kicker reveal"><span className="eyebrow">Beyond this one session</span></div>
-            <h2 className="reveal" style={{fontSize: 'clamp(24px,2.8vw,34px)', maxWidth: '640px', marginBottom: '40px'}}>InvestHack is one event inside a bigger network.</h2>
+            <h2 className="reveal" style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '760px', marginBottom: '40px'}}>InvestHack is one event inside a bigger network.</h2>
             <div className="more-grid reveal">
               <a className="more-card" href="https://belegends.club/events" target="_blank" rel="noopener">
                 <span className="mc-label">Upcoming events</span>
