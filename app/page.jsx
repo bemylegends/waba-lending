@@ -422,7 +422,7 @@ export default function Page() {
           <div className="wrap">
             <div className="kicker reveal"><span className="num">02</span><span className="eyebrow">The product</span></div>
             <h2 className="reveal" style={{fontSize: 'clamp(28px,3.2vw,39px)', lineHeight: '1.17', maxWidth: '760px', marginBottom: '40px'}}>Three ways to be inside the network. One rule &mdash; you deploy capital.</h2>
-            <div className="topic-grid reveal" style={{gridTemplateColumns: 'repeat(3,1fr)'}}>
+            <div className="topic-grid reveal">
               <div className="topic"><div className="ic">01</div><h4>Private</h4><p>Angels, LPs, syndicate leads and family offices who deploy only their own capital and don't raise.</p></div>
               <div className="topic"><div className="ic">02</div><h4>Fund</h4><p>GPs, fund partners and family offices who raise outside capital or bring co-investors into their own deals.</p></div>
               <div className="topic"><div className="ic">03</div><h4>Corporate</h4><p>Corporate venture arms, corporate development and strategic investors.</p></div>
