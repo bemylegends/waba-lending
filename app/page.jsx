@@ -5,6 +5,24 @@ import { useEffect } from 'react';
 export default function Page() {
   useEffect(() => {
 
+      // mobile burger menu: toggles the nav dropdown, closes on link click / outside click / resize back to desktop
+      try{
+        var burger = document.getElementById('burgerBtn');
+        var navLinksEl = document.getElementById('navLinks');
+        if(burger && navLinksEl){
+          var closeMenu = function(){ navLinksEl.classList.remove('open'); burger.classList.remove('open'); burger.setAttribute('aria-expanded','false'); };
+          var toggleMenu = function(){
+            var isOpen = navLinksEl.classList.toggle('open');
+            burger.classList.toggle('open', isOpen);
+            burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          };
+          burger.addEventListener('click', function(e){ e.stopPropagation(); toggleMenu(); });
+          navLinksEl.addEventListener('click', function(e){ if(e.target.tagName === 'A') closeMenu(); });
+          document.addEventListener('click', function(e){ if(!navLinksEl.contains(e.target) && e.target !== burger) closeMenu(); });
+          window.addEventListener('resize', function(){ if(window.innerWidth > 980) closeMenu(); });
+        }
+      }catch(e){}
+
       try{
         var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         // real InvestHack / Legends event speakers — each photo is the hero-block image from that
@@ -354,11 +372,14 @@ export default function Page() {
           <a className="brand" href="#top">
             <img src="/legends-logo.png" alt="Legends" />
           </a>
-          <nav className="links">
+          <nav className="links" id="navLinks">
             <a href="#what">What it is</a>
             <a href="#product">The product</a>
             <a href="#speakers">InvestHack</a>
           </nav>
+          <button className="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </header>
 
@@ -369,7 +390,8 @@ export default function Page() {
             <div className="hero-lead reveal">
               <p className="eyebrow">Legends Platform &middot; Private Investor Network</p>
               <h1>The private platform for investors who <span className="accent">move markets</span></h1>
-              <p className="sub">Legends is a private network and platform for investors, founders and operators &mdash; introductions matched by AI, vetted by the network. InvestHack is one of the ways we surface real operating knowledge &mdash; the decisions, the systems, the mistakes &mdash; pulled out of one founder or investor in public, then finished in private with the network.</p>
+              <p className="sub sub-full">Legends is a private network and platform for investors, founders and operators &mdash; introductions matched by AI, vetted by the network. InvestHack is one of the ways we surface real operating knowledge &mdash; the decisions, the systems, the mistakes &mdash; pulled out of one founder or investor in public, then finished in private with the network.</p>
+              <p className="sub sub-short">Legends is a private network and platform for investors, founders and operators &mdash; introductions matched by AI, vetted by the network.</p>
               <div className="hero-proof">
                 <div className="avatar-stack" id="avatarStack"></div>
                 <span><strong>Founders, investors, operators</strong> &mdash; this is who makes up the Legends network.</span>
