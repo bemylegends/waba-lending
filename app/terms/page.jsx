@@ -47,7 +47,7 @@ export default function TermsPage() {
           <p>We may update these terms from time to time. Where changes are material, we will make reasonable efforts to notify active members.</p>
 
           <h3>11. Contact us</h3>
-          <p>AVELYTH PLATFORM LTD<br />Arch. Makariou III, 115, 3021, Limassol, Cyprus<br />Site: coming soon<br />Phone: pending &mdash; to be added</p>
+          <p>AVELYTH PLATFORM LTD<br />Arch. Makariou III, 115, 3021, Limassol, Cyprus<br />Site: <a href="https://legends.app">legends.app</a><br />Phone: <a href="tel:+35797916300">+357 97 916300</a></p>
 
           <p className="privacy-note">These terms are a draft template prepared for review and are not a substitute for legal advice. Please have them reviewed by qualified counsel before publishing them as your site&apos;s binding terms of use. Fill in the final domain in section 11 once it&apos;s live.</p>
         </div>

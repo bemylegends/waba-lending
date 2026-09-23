@@ -545,7 +545,7 @@ export default function Page() {
             </div>
           </div>
           <div className="foot-legal">
-            <p>AVELYTH PLATFORM LTD &middot; Arch. Makariou III, 115, 3021, Limassol, Cyprus &middot; Phone: <em>pending &mdash; to be added</em></p>
+            <p>AVELYTH PLATFORM LTD &middot; Arch. Makariou III, 115, 3021, Limassol, Cyprus &middot; Phone: <a href="tel:+35797916300">+357 97 916300</a></p>
           </div>
         </div>
       </footer>

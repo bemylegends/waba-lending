@@ -44,7 +44,7 @@ export default function PrivacyPage() {
           <p>This site uses only the technical data necessary for it to function. It does not set marketing or tracking cookies.</p>
 
           <h3>10. Contact us</h3>
-          <p>AVELYTH PLATFORM LTD<br />Arch. Makariou III, 115, 3021, Limassol, Cyprus<br />Site: coming soon<br />Phone: pending &mdash; to be added</p>
+          <p>AVELYTH PLATFORM LTD<br />Arch. Makariou III, 115, 3021, Limassol, Cyprus<br />Site: <a href="https://legends.app">legends.app</a><br />Phone: <a href="tel:+35797916300">+357 97 916300</a></p>
 
           <p className="privacy-note">This policy is a draft template prepared for review and is not a substitute for legal advice. Please have it reviewed by qualified counsel before publishing it as your site&apos;s binding privacy policy. Before submitting it for WhatsApp Business Platform / Meta review, fill in the final domain and a working contact email or phone number in section 10 &mdash; placeholders there are likely to fail verification.</p>
         </div>
