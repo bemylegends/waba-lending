@@ -1,68 +1,46 @@
-# InvestHack landing page — Next.js export
+# Legends website (v2 — investor-first)
 
-Same page you approved in the Claude artifact, packaged as a Next.js app.
+Next.js (App Router) + React. No CSS framework; all styles live in `app/globals.css`.
 
-## Stack
-
-- Next.js (App Router) + React — no Tailwind, no UI kit.
-- One plain CSS file (`app/globals.css`) with hand-written classes (design
-  tokens as CSS custom properties, BEM-ish class names). If you ever move
-  this off Next.js, you can lift `app/globals.css` and the markup in
-  `app/page.jsx` into any other framework — the CSS has zero Next-specific
-  or Tailwind-specific syntax.
-- All the interactive bits (scroll reveal, the pinned parallax chips, the
-  mosaic hover parallax, populating the speaker grid) are the same vanilla
-  JS as the artifact, just run once from a `useEffect` in `app/page.jsx`
-  instead of an inline `<script>` tag.
-
-## Run it
+## Run locally
 
 ```bash
 npm install
-npm run dev
+npm run dev                  # http://localhost:3000
+npm run build && npm start   # production
 ```
 
-Then open http://localhost:3000. `npm run build` produces a production
-build (already verified to compile cleanly).
+## Pages
 
-## Files
+| Route | File |
+|---|---|
+| `/` | `app/page.jsx` |
+| `/how` | `app/how/page.jsx` |
+| `/membership` | `app/membership/page.jsx` |
+| `/events` | `app/events/page.jsx` |
+| `/events/<slug>` | `app/events/[slug]/page.jsx` — content in `data/eventDetails.js` |
+| `/knowledge` | `app/knowledge/page.jsx` |
+| `/knowledge/<slug>` | `app/knowledge/[slug]/page.jsx` |
+| `/about` | `app/about/page.jsx` |
+| `/apply` | `app/apply/page.jsx` |
+| `/login` | `app/login/page.jsx` |
 
-- `app/layout.jsx` — page `<head>` (title, the Outfit Google Font).
-- `app/page.jsx` — the whole page markup + the client-side interaction script.
-- `app/globals.css` — every style rule, extracted as-is.
-- `public/legends-logo.png` — the new logo you sent, cropped to its visible
-  bounds. Used in the header and footer.
+Hidden (not routed, kept for later): `app/_hidden/deals` (Deal flow). To bring it back, move it to `app/deals` and uncomment it in `components/Header.jsx`.
 
-## About the speaker photos — please read
+## Structure
 
-You asked for every speaker photo to be the real hero-block photo pulled
-from that person's own event page on belegends.club (not a quote-block
-photo). I went and checked every event actually listed on
-belegends.club/events.
+- `components/` — shared sections (Founder, HowSteps, Benefits, Tracks, Stance, Proof, Inside, Band, ApplyFaq, Footer)
+  and client components (Header, Hero, HeroNetwork, MatchEngine, HowFlow, ApplyForm, Reveal).
+- `data/events.js` — events (from belegends.club/events). `upcoming: true` puts an event in the Upcoming block; events with `slug` link to an internal page, others to their live URL.
+- `data/eventDetails.js` — full content for event pages (agenda, speaker, access, times, countdown date). Add an entry + `slug` in `events.js` to create a new event page.
+- `data/knowledge.js` — essays (from belegends.club/blog). Put the full text into `body` ({ p }, { h }, { quote } blocks); until then the page shows the summary and a link to the original.
+- `public/brand/` — founder photo and symbol.
 
-Two of your original six speakers do have their own InvestHack-style event
-page there, and I kept them with their real hero photo:
+## TODO
 
-- **Janneke Niessen** — Founding Partner, CapitalT
-- **Walied Albasheer** — Founder & Managing Partner
-
-The other four names from before (Mohamed Hasan, Dr. Salwa Arfaoui, Dory
-Sakr, Amit Puri) don't have a matching event page on belegends.club, so I
-had no real photo URL to point at for them — I never fabricate a link.
-Rather than leave four broken/fallback avatars, I swapped them for four
-other real people who do have a genuine event page with a real hero photo:
-
-- **Vijay Sivaram** — Co-Founder, RVAI Global (from "Legends InvestHack #1")
-- **Varun Malik** — Founder, Konsälidön
-- **Julius Bachmann** — Founder, Bachmann Catalyst
-- **Alex Felman** — General Partner, Felman Family Office
-
-All six `img` URLs in the `people` array (top of the script in
-`app/page.jsx`) are the actual hero-image `src` from each person's own page
-— not the quotes-section image. If you'd rather keep any of the four
-original names, just get me a hero-block photo URL for them (or a page for
-me to pull it from) and I'll swap the array entry.
-
-Two of the six images live on `belegends.club`, one on `images.lumacdn.com`
-— `next.config.js` already allow-lists both hosts for `next/image` in case
-you switch the plain `<img>` tags over to it later.
+- Official SVG logo for light backgrounds in `Header.jsx` / `Footer.jsx`.
+- Investor-facing text from Yanis in `Founder.jsx`.
+- Sample deals in `Benefits.jsx` and `app/deals/page.jsx` are placeholders.
+- Full essay texts for `data/knowledge.js`.
+- `ApplyForm.jsx`, `RegisterCard.jsx` and login only show the prototype state — connect to the backend.
+- Event covers, gallery video and testimonial photos are hot-linked from belegends.club / lumacdn; copy them into `public/` for production.
