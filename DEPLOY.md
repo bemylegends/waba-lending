@@ -14,12 +14,12 @@
 - components/AddToCalendar.jsx
 - components/ReadProgress.jsx
 - data/eventDetails.js
-- VERSION.txt
+- VERSION.txt ---
 
 ## These MUST NOT exist (old version)
 
 - app/rooms/
 - app/insights/
-- app/deals/ (Deal flow is kept in app/_hidden/deals)
+- app/deals/ (Deal flow is kept in app/\_hidden/deals)
 - components/RequestCard.jsx, components/EventsGrid.jsx, components/HomeRoomsSection.jsx
 - public/prototype.js
