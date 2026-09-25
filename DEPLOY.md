@@ -6,8 +6,9 @@
 
 ## Check before committing — these files MUST exist
 
-- app/events/[slug]/page.jsx
-- app/knowledge/[slug]/page.jsx
+- app/events/after-20-investments-what-makes-me-say-yes/page.jsx (imports EventPage)
+- app/knowledge/slop-is-not-bad-work/page.jsx (+ 4 other article folders)
+- components/EventPage.jsx, components/ArticlePage.jsx
 - components/Countdown.jsx
 - components/RegisterCard.jsx
 - components/AddToCalendar.jsx
@@ -20,6 +21,5 @@
 - app/rooms/
 - app/insights/
 - app/deals/ (Deal flow is kept in app/_hidden/deals)
-- app/events/after-20-investments-what-makes-me-say-yes/
 - components/RequestCard.jsx, components/EventsGrid.jsx, components/HomeRoomsSection.jsx
 - public/prototype.js
